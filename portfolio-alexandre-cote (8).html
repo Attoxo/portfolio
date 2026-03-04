@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alexandre COTE — Portfolio BTS SIO</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #00e5ff;
+    --accent2: #7b2fff;
+    --accent3: #ff6b35;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --card: #14141f;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    
+  }
+
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    mix-blend-mode: screen;
+    opacity: 0.5;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.12; }
+  .orb1 { width: 500px; height: 500px; background: var(--accent2); top: -100px; right: -100px; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent); bottom: 200px; left: -150px; }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+  }
+
+  .nav-logo { font-family: 'Space Mono', monospace; font-size: 0.9rem; color: var(--accent); letter-spacing: 0.1em; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 600; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    padding: 0.5rem 1.2rem; border: 1px solid var(--accent);
+    color: var(--accent); background: transparent; text-decoration: none;
+    letter-spacing: 0.1em; transition: all 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+  }
+
+  .hero-left { flex: 1; }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--accent); display: inline-block; }
+
+  .hero-name {
+    font-size: clamp(3.5rem, 7vw, 6.5rem); font-weight: 800;
+    line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1rem;
+  }
+  .hero-name span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-subtitle { font-size: 1.05rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.7; max-width: 500px; }
+
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 0.9rem 2rem; background: var(--accent); color: var(--bg);
+    font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase;
+    transition: all 0.25s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  .btn-secondary {
+    padding: 0.9rem 2rem; border: 1px solid var(--border); color: var(--text);
+    font-family: 'Space Mono', monospace; font-size: 0.8rem;
+    letter-spacing: 0.1em; text-decoration: none; text-transform: uppercase; transition: all 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* TERMINAL */
+  .hero-terminal {
+    flex: 0 0 430px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 2px; overflow: hidden;
+    animation: fadeInRight 0.8s ease 0.3s both;
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .terminal-header {
+    background: var(--surface); padding: 0.8rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #ffbd2e; } .dot.g { background: #28c840; }
+  .terminal-title { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-left: 0.5rem; }
+
+  .terminal-body { padding: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.78rem; line-height: 2; }
+  .t-prompt { color: var(--accent2); } .t-cmd { color: var(--text); } .t-comment { color: var(--muted); }
+  .t-string { color: var(--accent3); } .t-key { color: var(--accent); }
+  .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); vertical-align: middle; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* STATS */
+  .stats-bar {
+    display: flex; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    background: var(--surface); padding: 2rem 4rem; gap: 0;
+  }
+  .stat { flex: 1; text-align: center; padding: 0.5rem; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* SKILLS */
+  #competences { padding: 6rem 4rem; }
+
+  .section-header { margin-bottom: 3rem; }
+  .section-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+  .section-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.02em; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); padding: 1.8rem;
+    position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .skill-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+  .skill-card:hover::before { transform: scaleX(1); }
+
+  .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .skill-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .skill-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-family: 'Space Mono', monospace; font-size: 0.65rem; padding: 0.25rem 0.6rem; border: 1px solid var(--border); color: var(--accent); letter-spacing: 0.05em; }
+
+  /* EXPÉRIENCES */
+  #experiences { padding: 6rem 4rem; background: linear-gradient(180deg, transparent, rgba(18,18,26,0.8)); }
+
+  .experiences-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+
+  .exp-card {
+    background: var(--card); border: 1px solid var(--border); padding: 1.8rem;
+    position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .exp-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent3), var(--accent2));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .exp-card:hover { border-color: rgba(255,107,53,0.3); transform: translateY(-4px); }
+  .exp-card:hover::before { transform: scaleX(1); }
+
+  .exp-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent3); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .exp-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .exp-company { font-size: 0.85rem; color: var(--accent); margin-bottom: 1rem; font-weight: 600; }
+  .exp-tasks { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .exp-tasks li { font-size: 0.82rem; color: var(--muted); line-height: 1.5; padding-left: 1rem; position: relative; }
+  .exp-tasks li::before { content: '›'; position: absolute; left: 0; color: var(--accent3); }
+
+  /* FORMATION */
+  #formation { padding: 6rem 4rem; }
+
+  .timeline { max-width: 700px; margin-top: 3rem; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+
+  .timeline-item { padding-left: 2.5rem; margin-bottom: 2.5rem; position: relative; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -4px; top: 6px;
+    width: 9px; height: 9px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent);
+  }
+
+  .tl-date { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .tl-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .tl-place { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .tl-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* CONTACT */
+  #contact { padding: 6rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; border-top: 1px solid var(--border); }
+
+  .contact-left h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+  .contact-left h2 em { font-style: normal; color: var(--accent); }
+  .contact-left p { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 2rem; }
+
+  .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+
+  .contact-link {
+    display: flex; align-items: center; gap: 1rem; padding: 1rem 1.2rem;
+    border: 1px solid var(--border); background: var(--card);
+    text-decoration: none; color: var(--text); transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link-icon { font-size: 1.2rem; width: 32px; text-align: center; }
+  .contact-link-text { font-size: 0.9rem; font-weight: 600; }
+  .contact-link-sub { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+  .form-group input, .form-group textarea {
+    background: var(--card); border: 1px solid var(--border); color: var(--text);
+    padding: 0.8rem 1rem; font-family: 'Syne', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s; resize: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { min-height: 120px; }
+
+  /* Soft skills & hobbies */
+  .pills-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+  .pill {
+    font-family: 'Space Mono', monospace; font-size: 0.72rem;
+    padding: 0.4rem 1rem; border: 1px solid var(--border);
+    color: var(--text); letter-spacing: 0.05em; background: var(--card);
+    transition: all 0.2s;
+  }
+  .pill:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  footer {
+    padding: 2rem 4rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; background: var(--surface);
+  }
+  .footer-copy { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); }
+  .footer-badge { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); border: 1px solid var(--accent); padding: 0.3rem 0.7rem; letter-spacing: 0.1em; }
+
+  .reveal { opacity: 1; transform: translateY(0); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { flex-direction: column; padding: 6rem 1.5rem 3rem; }
+    .hero-terminal { flex: none; width: 100%; }
+    .stats-bar { flex-direction: column; padding: 2rem 1.5rem; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; }
+    .stat:last-child { border-bottom: none; }
+    #competences, #experiences, #formation { padding: 4rem 1.5rem; }
+    #contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+    footer { flex-direction: column; gap: 1rem; padding: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">// COTE.dev</div>
+  <ul class="nav-links">
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#experiences">Expériences</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Me contacter</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Étudiant BTS SIO — Lycée Les Chassagnes, Oullins</div>
+    <h1 class="hero-name">
+      Alexandre<br>
+      <span>COTE</span>
+    </h1>
+    <p class="hero-subtitle">
+      Étudiant en BTS SIO passionné par les réseaux, les systèmes et le support informatique.
+      Fort de 6 stages variés, je recherche une alternance ou un nouveau stage pour continuer à progresser.
+    </p>
+    <div class="hero-btns">
+      <a href="#experiences" class="btn-primary">Voir mes expériences →</a>
+      <a href="#contact" class="btn-secondary">Me contacter</a>
+    </div>
+  </div>
+
+  <div class="hero-terminal">
+    <div class="terminal-header">
+      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+      <span class="terminal-title">~/portfolio — bash</span>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-prompt">alexandre@portfolio:~$</span> <span class="t-cmd">cat profil.json</span></div>
+      <div><span class="t-comment">{</span></div>
+      <div>&nbsp;&nbsp;<span class="t-key">"nom"</span>: <span class="t-string">"Alexandre COTE"</span>,</div>
+      <div>&nbsp;&nbsp;<span class="t-key">"formation"</span>: <span class="t-string">"BTS SIO"</span>,</div>
+      <div>&nbsp;&nbsp;<span class="t-key">"localisation"</span>: <span class="t-string">"Crépieux, 69140"</span>,</div>
+      <div>&nbsp;&nbsp;<span class="t-key">"stages"</span>: <span class="t-string">6</span>,</div>
+      <div>&nbsp;&nbsp;<span class="t-key">"competences"</span>: [</div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"Réseaux"</span>, <span class="t-string">"AD"</span>, <span class="t-string">"VLAN"</span>,</div>
+      <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-string">"Support"</span>, <span class="t-string">"Domotique"</span></div>
+      <div>&nbsp;&nbsp;],</div>
+      <div>&nbsp;&nbsp;<span class="t-key">"disponible"</span>: <span class="t-string">true</span></div>
+      <div><span class="t-comment">}</span></div>
+      <div><span class="t-prompt">alexandre@portfolio:~$</span> <span class="t-cursor"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">6</div><div class="stat-label">Stages réalisés</div></div>
+  <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Ans d'expérience</div></div>
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Hard Skills clés</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Motivation</div></div>
+</div>
+
+<!-- COMPÉTENCES -->
+<section id="competences">
+  <div class="section-header reveal">
+    <div class="section-tag">Expertises</div>
+    <h2 class="section-title">Mes compétences</h2>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal" style="transition-delay:0.05s">
+      <div class="skill-icon">🖧</div>
+      <div class="skill-title">Réseaux & Infrastructure</div>
+      <div class="skill-desc">Configuration de routeurs et commutateurs, mise en place de VLAN, segmentation de sous-réseaux et supervision du trafic réseau.</div>
+      <div class="skill-tags"><span class="tag">TCP/IP</span><span class="tag">VLAN</span><span class="tag">Routeurs</span><span class="tag">Commutateurs</span></div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.1s">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-title">Systèmes d'exploitation</div>
+      <div class="skill-desc">Installation, configuration et maintenance de systèmes Windows et Linux. Gestion des utilisateurs, des droits et des politiques de sécurité via Active Directory.</div>
+      <div class="skill-tags"><span class="tag">Windows</span><span class="tag">Linux</span><span class="tag">Active Directory</span><span class="tag">GPO</span></div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.15s">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-title">Support & Maintenance</div>
+      <div class="skill-desc">Diagnostic et réparation de matériel informatique, remplacement de composants, mise à jour logicielle et rédaction de documentation technique utilisateur.</div>
+      <div class="skill-tags"><span class="tag">Hardware</span><span class="tag">Diagnostic</span><span class="tag">Antivirus</span><span class="tag">Documentation</span></div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.2s">
+      <div class="skill-icon">🏠</div>
+      <div class="skill-title">Domotique & IoT</div>
+      <div class="skill-desc">Installation, préparation et paramétrage d'équipements domotiques. Identification de pannes, tests de fonctionnement et mise en service chez les clients.</div>
+      <div class="skill-tags"><span class="tag">Domotique</span><span class="tag">IoT</span><span class="tag">Câblage</span><span class="tag">Tests</span></div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.25s">
+      <div class="skill-icon">📋</div>
+      <div class="skill-title">Analyse & Documentation</div>
+      <div class="skill-desc">Recueil des besoins utilisateurs, rédaction de cahiers des charges, de guides et de procédures techniques claires et accessibles.</div>
+      <div class="skill-tags"><span class="tag">Analyse</span><span class="tag">Rédaction</span><span class="tag">Cahier des charges</span></div>
+    </div>
+
+    <div class="skill-card reveal" style="transition-delay:0.3s">
+      <div class="skill-icon">🎭</div>
+      <div class="skill-title">Soft Skills</div>
+      <div class="skill-desc">Curieux, motivé et persévérant, je m'adapte rapidement aux environnements professionnels et apprécie le travail en équipe.</div>
+      <div class="skill-tags"><span class="tag">Curiosité</span><span class="tag">Motivation</span><span class="tag">Persévérance</span><span class="tag">Adaptabilité</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="experiences">
+  <div class="section-header reveal">
+    <div class="section-tag">Parcours</div>
+    <h2 class="section-title">Expériences professionnelles</h2>
+  </div>
+
+  <div class="experiences-grid">
+    <div class="exp-card reveal" style="transition-delay:0.05s">
+      <div class="exp-date">Mars 2024</div>
+      <div class="exp-title">Assistant Technicien Domotique</div>
+      <div class="exp-company">Media Surround — Miribel</div>
+      <ul class="exp-tasks">
+        <li>Installation des équipements, préparation et paramétrage</li>
+        <li>Identification et recherche de pannes</li>
+        <li>Réalisation de tests pour garantir le bon fonctionnement des équipements</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal" style="transition-delay:0.1s">
+      <div class="exp-date">Novembre 2023</div>
+      <div class="exp-title">Réparateur Informatique</div>
+      <div class="exp-company">Ellipse Informatique — Miribel</div>
+      <ul class="exp-tasks">
+        <li>Réparations matérielles : disque dur, carte graphique, mémoire</li>
+        <li>Maintenance sur postes de travail et périphériques</li>
+        <li>Formation des clients à la prise en main de nouveaux équipements</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal" style="transition-delay:0.15s">
+      <div class="exp-date">Juin 2023</div>
+      <div class="exp-title">Assistant Technicien Domotique</div>
+      <div class="exp-company">Media Surround — Miribel</div>
+      <ul class="exp-tasks">
+        <li>Installation des équipements, préparation et paramétrage</li>
+        <li>Identification et recherche de pannes</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal" style="transition-delay:0.2s">
+      <div class="exp-date">Janvier 2023</div>
+      <div class="exp-title">Assistant Analyste Applications Métiers</div>
+      <div class="exp-company">Manitowoc Crane Group France SAS — Dardilly</div>
+      <ul class="exp-tasks">
+        <li>Mise au point d'un questionnaire pour recueillir les besoins utilisateurs</li>
+        <li>Rédaction d'un guide à destination des utilisateurs</li>
+        <li>Prise en charge de la conception d'une application</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal" style="transition-delay:0.25s">
+      <div class="exp-date">Mai 2022</div>
+      <div class="exp-title">Assistant Technicien Son & Lumière</div>
+      <div class="exp-company">JF Évènement — Bron</div>
+      <ul class="exp-tasks">
+        <li>Gestion des sons et lumières avant, pendant répétitions et représentations</li>
+        <li>Gestion du stock : inventaires et rangement</li>
+      </ul>
+    </div>
+
+    <div class="exp-card reveal" style="transition-delay:0.3s">
+      <div class="exp-date">Octobre 2021</div>
+      <div class="exp-title">Assistant Technicien Support Utilisateur</div>
+      <div class="exp-company">Manitowoc Crane Group France SAS — Dardilly</div>
+      <ul class="exp-tasks">
+        <li>Préparation des postes informatiques pour le personnel entrant</li>
+        <li>Installation et mise à jour des logiciels et antivirus</li>
+        <li>Rédaction de la documentation technique pour les utilisateurs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="section-header reveal">
+    <div class="section-tag">Diplômes</div>
+    <h2 class="section-title">Formation</h2>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="tl-date">Septembre 2024 — Aujourd'hui</div>
+      <div class="tl-title">BTS SIO — Services Informatiques aux Organisations</div>
+      <div class="tl-place">Lycée privé Les Chassagnes — Oullins (69600)</div>
+      <div class="tl-desc">Formation aux réseaux, systèmes, cybersécurité, développement et gestion de projets informatiques.</div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="tl-date">Septembre 2021 — Juin 2024</div>
+      <div class="tl-title">Bac Pro Systèmes Numériques</div>
+      <div class="tl-place">Lycée privé Saint Charles — Rillieux (69140)</div>
+      <div class="tl-desc">Spécialité Réseaux Informatiques et Systèmes Communicants. Bases solides en infrastructure réseau et systèmes embarqués.</div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="tl-date">Juin 2021</div>
+      <div class="tl-title">Brevet des Collèges</div>
+      <div class="tl-place">Collège privé Saint Charles — Rillieux (69140)</div>
+      <div class="tl-desc">Obtention du diplôme national du brevet.</div>
+    </div>
+  </div>
+
+  <!-- Centres d'intérêt -->
+  <div style="margin-top: 3rem;" class="reveal">
+    <div class="section-tag" style="margin-bottom: 1rem;">Centres d'intérêt</div>
+    <div class="pills-row">
+      <span class="pill">✈️ Voyages</span>
+      <span class="pill">🍳 Cuisine</span>
+      <span class="pill">📚 Lecture</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="display:block;">
+  <div class="contact-left reveal">
+    <div class="section-tag">Contact</div>
+    <h2>Travaillons<br><em>ensemble.</em></h2>
+    <p>Je suis disponible pour un stage de 4 semaines (5 mai – 6 juin 2025) ou toute opportunité d'alternance. N'hésitez pas à me contacter !</p>
+
+    <div class="contact-links">
+      <a href="mailto:alexandrecote2006@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉️</span>
+        <div>
+          <div class="contact-link-text">Email</div>
+          <div class="contact-link-sub">alexandrecote2006@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+33768722594" class="contact-link">
+        <span class="contact-link-icon">📱</span>
+        <div>
+          <div class="contact-link-text">Téléphone</div>
+          <div class="contact-link-sub">+33 07 68 72 25 94</div>
+        </div>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">📍</span>
+        <div>
+          <div class="contact-link-text">Localisation</div>
+          <div class="contact-link-sub">36 Chemin des Balmes, 69140 Crépieux</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 Alexandre COTE — Tous droits réservés</div>
+  <div class="footer-badge">BTS SIO — Oullins</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX - 5 + 'px';
+    cursor.style.top = mouseY - 5 + 'px';
+  });
+
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX - 18 + 'px';
+    ring.style.top = ringY - 18 + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  function animateCount(el, target, suffix = '') {
+    let current = 0;
+    const step = target / 50;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(timer); }
+      el.textContent = Math.round(current) + suffix;
+    }, 30);
+  }
+
+  const statsObserver = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const text = el.textContent;
