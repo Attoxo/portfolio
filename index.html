@@ -642,10 +642,10 @@
   </div>
 
   <div class="veille-downloads reveal">
-    <a href="Optimisation-et-Veille-Strategique__3___1_.pptx" download class="btn-download">
+    <a href="Optimisation-et-Veille-Strategique.pptx" download class="btn-download">
       📥 Télécharger la présentation de veille (.pptx)
     </a>
-    <a href="Tableau-de-synthèse-Epreuve-E5-BTS-SIO_-2026__4_.xlsx" download class="btn-download">
+    <a href="Tableau-de-synthèse-Epreuve-E5-BTS-SIO -2026.xlsx" download class="btn-download">
       📥 Télécharger le tableau de synthèse E5 (.xlsx)
     </a>
   </div>
@@ -673,7 +673,7 @@
           <div class="contact-link-sub">Rillieux-la-pape</div>
         </div>
       </a>
-      <a href="CV_Alexandre_2025v2_pdf.pdf" download class="contact-link">
+      <a href="CV Alexandre 2025v2.pdf.pdf" download class="contact-link">
         <span class="contact-link-icon">📄</span>
         <div>
           <div class="contact-link-text">Mon CV</div>
@@ -733,5 +733,8 @@
 
   const statsObserver = new IntersectionObserver(entries => {
     if (entries[0].isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const text = el.textContent;
+
       document.querySelectorAll('.stat-num').forEach(el => {
         const text = el.textContent;
