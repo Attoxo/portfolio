@@ -262,6 +262,53 @@
   .tl-place { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.6rem; }
   .tl-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
+  /* VEILLE */
+  #veille { padding: 6rem 4rem; border-top: 1px solid var(--border); }
+
+  .veille-intro {
+    max-width: 720px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .veille-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+
+  .veille-card {
+    background: var(--card); border: 1px solid var(--border); padding: 1.8rem;
+    position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .veille-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .veille-card:hover { border-color: rgba(123,47,255,0.3); transform: translateY(-4px); }
+  .veille-card:hover::before { transform: scaleX(1); }
+  .veille-card-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .veille-card-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .veille-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  .veille-downloads { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+
+  .btn-download {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.9rem 1.6rem; border: 1px solid var(--accent2); color: var(--accent2);
+    font-family: 'Space Mono', monospace; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase; transition: all 0.25s;
+    background: transparent;
+  }
+  .btn-download:hover { background: var(--accent2); color: #fff; transform: translateY(-2px); }
+  .btn-download-cv {
+    border-color: var(--accent); color: var(--accent);
+  }
+  .btn-download-cv:hover { background: var(--accent); color: var(--bg); }
+
+  @media (max-width: 768px) {
+    #veille { padding: 4rem 1.5rem; }
+  }
+
   /* CONTACT */
   #contact { padding: 6rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; border-top: 1px solid var(--border); }
 
@@ -340,6 +387,7 @@
     <li><a href="#competences">Compétences</a></li>
     <li><a href="#experiences">Expériences</a></li>
     <li><a href="#formation">Formation</a></li>
+    <li><a href="#veille">Veille</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Me contacter</a>
@@ -561,6 +609,48 @@
   </div>
 </section>
 
+<!-- VEILLE TECHNOLOGIQUE -->
+<section id="veille">
+  <div class="section-header reveal">
+    <div class="section-tag">Veille</div>
+    <h2 class="section-title">Veille Technologique & Stratégique</h2>
+  </div>
+
+  <p class="veille-intro reveal">
+    Dans le cadre de mon BTS SIO, j'ai conduit une veille stratégique sur le thème : <strong>« Comment l'intelligence artificielle transforme la façon dont les entreprises anticipent, décident et agissent. »</strong>
+    Cette veille analyse comment l'IA bouleverse concrètement les processus métiers : de la prise de décision augmentée à l'automatisation des tâches, 
+    en passant par la prédiction des tendances marché et l'optimisation des ressources. J'ai recensé des cas d'usage réels dans différents secteurs 
+    et évalué les enjeux humains, éthiques et organisationnels que cette transformation implique.
+  </p>
+
+  <div class="veille-cards">
+    <div class="veille-card reveal" style="transition-delay:0.05s">
+      <div class="veille-card-icon">🤖</div>
+      <div class="veille-card-title">Anticipation & Prédiction</div>
+      <div class="veille-card-desc">L'IA permet aux entreprises d'analyser des volumes massifs de données pour anticiper les tendances, les risques et les comportements clients bien avant qu'ils se manifestent.</div>
+    </div>
+    <div class="veille-card reveal" style="transition-delay:0.1s">
+      <div class="veille-card-icon">🧠</div>
+      <div class="veille-card-title">Décision Augmentée</div>
+      <div class="veille-card-desc">Les outils d'IA assistent les dirigeants et équipes dans leurs choix stratégiques en synthétisant l'information, en modélisant des scénarios et en réduisant les biais cognitifs.</div>
+    </div>
+    <div class="veille-card reveal" style="transition-delay:0.15s">
+      <div class="veille-card-icon">⚡</div>
+      <div class="veille-card-title">Action & Automatisation</div>
+      <div class="veille-card-desc">De la chaîne logistique au service client, l'IA automatise les actions répétitives, accélère les processus et libère les collaborateurs pour des tâches à plus forte valeur ajoutée.</div>
+    </div>
+  </div>
+
+  <div class="veille-downloads reveal">
+    <a href="Optimisation-et-Veille-Strategique__3___1_.pptx" download class="btn-download">
+      📥 Télécharger la présentation de veille (.pptx)
+    </a>
+    <a href="Tableau-de-synthèse-Epreuve-E5-BTS-SIO_-2026__4_.xlsx" download class="btn-download">
+      📥 Télécharger le tableau de synthèse E5 (.xlsx)
+    </a>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" style="display:block;">
   <div class="contact-left reveal">
@@ -581,6 +671,13 @@
         <div>
           <div class="contact-link-text">Localisation</div>
           <div class="contact-link-sub">Rillieux-la-pape</div>
+        </div>
+      </a>
+      <a href="CV_Alexandre_2025v2_pdf.pdf" download class="contact-link">
+        <span class="contact-link-icon">📄</span>
+        <div>
+          <div class="contact-link-text">Mon CV</div>
+          <div class="contact-link-sub">Télécharger le CV (.pdf)</div>
         </div>
       </a>
     </div>
