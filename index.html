@@ -29,27 +29,7 @@
     
   }
 
-  .cursor {
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s;
-    mix-blend-mode: screen;
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.15s ease;
-    mix-blend-mode: screen;
-    opacity: 0.5;
-  }
+
 
   body::before {
     content: '';
@@ -349,6 +329,85 @@
   }
   .pill:hover { border-color: var(--accent2); color: var(--accent2); }
 
+  .projet-dl {
+    margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  }
+  .btn-projet-dl {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.55rem 1rem; border: 1px solid var(--accent); color: var(--accent);
+    font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.08em; text-decoration: none; text-transform: uppercase;
+    transition: all 0.2s; background: transparent;
+  }
+  .btn-projet-dl:hover { background: var(--accent); color: var(--bg); transform: translateY(-1px); }
+
+  /* PROJETS */
+  #projets { padding: 6rem 4rem; border-top: 1px solid var(--border); }
+  .projets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .projet-card {
+    background: var(--card); border: 1px solid var(--border); padding: 1.8rem;
+    position: relative; overflow: hidden; transition: all 0.3s;
+  }
+  .projet-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .projet-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); }
+  .projet-card:hover::before { transform: scaleX(1); }
+  .projet-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 0.8rem; }
+  .projet-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .projet-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+  .projet-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem; }
+  .projet-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  /* TABLEAU DE SYNTHÈSE VISIBLE dans Veille */
+  .synthese-wrapper { margin-top: 3.5rem; }
+  .synthese-section-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent2);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .synthese-section-tag::before { content: ''; width: 30px; height: 1px; background: var(--accent2); }
+  .synthese-meta { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.8; }
+  .synthese-meta span { color: var(--accent); }
+  .synthese-scroll { overflow-x: auto; border: 1px solid var(--border); }
+  .synthese-table {
+    width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 750px;
+  }
+  .synthese-table thead tr { background: var(--surface); }
+  .synthese-table th {
+    padding: 0.8rem 1rem; text-align: left; color: var(--accent);
+    font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); white-space: nowrap;
+  }
+  .synthese-table th:last-child { border-right: none; }
+  .synthese-table td {
+    padding: 0.65rem 1rem; color: var(--muted); border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border); vertical-align: middle; line-height: 1.5; font-size: 0.8rem;
+  }
+  .synthese-table td:last-child { border-right: none; }
+  .synthese-table tr:last-child td { border-bottom: none; }
+  .synthese-table tbody tr:hover { background: rgba(0,229,255,0.03); }
+  .synthese-table tbody tr:hover td { color: var(--text); }
+  .td-real { color: var(--text); font-weight: 600; }
+  .td-periode { font-family: 'Space Mono', monospace; font-size: 0.68rem; white-space: nowrap; }
+  .check-x {
+    display: inline-block; width: 18px; height: 18px; background: rgba(0,229,255,0.12);
+    border: 1px solid var(--accent); color: var(--accent);
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700;
+    text-align: center; line-height: 18px;
+  }
+  .synthese-section-header td {
+    background: rgba(123,47,255,0.08); color: var(--accent2); font-weight: 700;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.05em;
+    border-color: rgba(123,47,255,0.2);
+  }
+
+  @media (max-width: 768px) {
+    #projets { padding: 4rem 1.5rem; }
+  }
+
   footer {
     padding: 2rem 4rem; border-top: 1px solid var(--border);
     display: flex; justify-content: space-between; align-items: center; background: var(--surface);
@@ -375,8 +434,6 @@
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 
@@ -387,6 +444,7 @@
     <li><a href="#competences">Compétences</a></li>
     <li><a href="#experiences">Expériences</a></li>
     <li><a href="#formation">Formation</a></li>
+    <li><a href="#projets">Projets</a></li>
     <li><a href="#veille">Veille</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -609,6 +667,70 @@
   </div>
 </section>
 
+<!-- PROJETS -->
+<section id="projets">
+  <div class="section-header reveal">
+    <div class="section-tag">Réalisations</div>
+    <h2 class="section-title">Mes projets</h2>
+  </div>
+
+  <div class="projets-grid">
+
+    <div class="projet-card reveal" style="transition-delay:0.05s">
+      <div class="projet-num">// PROJET 01</div>
+      <div class="projet-icon">🗂️</div>
+      <div class="projet-title">Déploiement Active Directory</div>
+      <div class="projet-desc">Mise en place d'un annuaire Windows Server pour une infrastructure d'entreprise : gestion centralisée des utilisateurs, des droits d'accès et des politiques de sécurité via GPO.</div>
+      <div class="projet-tags">
+        <span class="tag">Windows Server 2022</span><span class="tag">AD DS</span><span class="tag">GPO</span><span class="tag">PowerShell</span><span class="tag">DNS</span>
+      </div>
+      <div class="projet-dl">
+        <a href="TP1_-_Installation_des_rôles_AD.pdf" download class="btn-projet-dl">📥 TP — Installation des rôles AD</a>
+      </div>
+    </div>
+
+    <div class="projet-card reveal" style="transition-delay:0.1s">
+      <div class="projet-num">// PROJET 02</div>
+      <div class="projet-icon">💾</div>
+      <div class="projet-title">Plan de sauvegarde & PRA</div>
+      <div class="projet-desc">Conception et mise en œuvre d'une stratégie de sauvegarde selon la règle 3-2-1, avec tests de restauration et rédaction d'un Plan de Reprise d'Activité.</div>
+      <div class="projet-tags">
+        <span class="tag">Veeam</span><span class="tag">rsync</span><span class="tag">RAID</span><span class="tag">Debian</span><span class="tag">PRA/PCA</span>
+      </div>
+      <div class="projet-dl">
+        <a href="Doc3_-_les_sauvegardes.pdf" download class="btn-projet-dl">📥 Cours — Les sauvegardes</a>
+      </div>
+    </div>
+
+    <div class="projet-card reveal" style="transition-delay:0.15s">
+      <div class="projet-num">// PROJET 03</div>
+      <div class="projet-icon">🐧</div>
+      <div class="projet-title">Infrastructure serveurs Linux</div>
+      <div class="projet-desc">Déploiement de services réseau fondamentaux sous Debian Server dans un environnement virtualisé : DHCP, DNS, serveur web et sécurisation des services.</div>
+      <div class="projet-tags">
+        <span class="tag">Debian</span><span class="tag">BIND9</span><span class="tag">ISC-DHCP</span><span class="tag">Apache</span><span class="tag">Nginx</span><span class="tag">VirtualBox</span>
+      </div>
+      <div class="projet-dl">
+        <a href="dossier-technique-plateforme.pdf" download class="btn-projet-dl">📥 Dossier technique — Plateforme</a>
+      </div>
+    </div>
+
+    <div class="projet-card reveal" style="transition-delay:0.2s">
+      <div class="projet-num">// PROJET 04</div>
+      <div class="projet-icon">🎫</div>
+      <div class="projet-title">Déploiement GLPI</div>
+      <div class="projet-desc">Installation et configuration de GLPI pour la gestion du parc informatique et du helpdesk : inventaire automatique, gestion des tickets et des actifs.</div>
+      <div class="projet-tags">
+        <span class="tag">GLPI</span><span class="tag">FusionInventory</span><span class="tag">MySQL</span><span class="tag">Apache</span><span class="tag">PHP</span>
+      </div>
+      <div class="projet-dl">
+        <a href="TP1-GLPI-GestionParc.pdf" download class="btn-projet-dl">📥 TP — Gestion de parc GLPI</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- VEILLE TECHNOLOGIQUE -->
 <section id="veille">
   <div class="section-header reveal">
@@ -648,6 +770,149 @@
     <a href="Tableau-de-synthèse-alexandre.xlsx" download class="btn-download">
       📥 Télécharger le tableau de synthèse E5 (.xlsx)
     </a>
+  </div>
+
+  <!-- TABLEAU DE SYNTHÈSE VISIBLE -->
+  <div class="synthese-wrapper reveal">
+    <div class="synthese-section-tag">Tableau de synthèse des réalisations professionnelles — Épreuve E5</div>
+    <div class="synthese-meta">
+      <span>NOM : COTE ALEXANDRE</span> &nbsp;|&nbsp; Option : SISR &nbsp;|&nbsp; Session 2026<br>
+      Portfolio : <span>https://attoxo.github.io/portfolio/</span>
+    </div>
+    <div class="synthese-scroll">
+      <table class="synthese-table">
+        <thead>
+          <tr>
+            <th style="min-width:260px">Réalisation professionnelle</th>
+            <th>Période</th>
+            <th>Gérer le patrimoine informatique</th>
+            <th>Répondre aux incidents et demandes</th>
+            <th>Développer la présence en ligne</th>
+            <th>Travailler en mode projet</th>
+            <th>Mettre à disposition un service</th>
+            <th>Organiser son développement</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="synthese-section-header">
+            <td colspan="8">Réalisations en cours de formation (TP / AP / TD)</td>
+          </tr>
+          <tr>
+            <td class="td-real">Utilisation d'un outil de travail collaboratif (Lucid chez AZA)</td>
+            <td class="td-periode">01/11/25 → 31/06/26</td>
+            <td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Création du portfolio</td>
+            <td class="td-periode">01/12/25 → 15/04/26</td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+          </tr>
+          <tr>
+            <td class="td-real">Création du site web pour le projet MA Banque</td>
+            <td class="td-periode">18/02/25 → 15/04/25</td>
+            <td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Mise à jour régulière d'une veille</td>
+            <td class="td-periode">11/10/25 → 15/04/26</td>
+            <td></td><td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+          </tr>
+          <tr>
+            <td class="td-real">Gestion des utilisateurs (AD)</td>
+            <td class="td-periode">01/11/25 → 03/11/25</td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">TP GLPI</td>
+            <td class="td-periode">06/11/25 → 13/11/25</td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr class="synthese-section-header">
+            <td colspan="8">Réalisations en milieu professionnel — 1re année</td>
+          </tr>
+          <tr>
+            <td class="td-real">Installation / maintenance poste client</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Ticket GLPI</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Script de tri de fichier</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Déploiement de borne Wi-Fi</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Recensement du matériel informatique</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Utilisation d'un serveur de déploiement</td>
+            <td class="td-periode">06/05/25 → 07/06/25</td>
+            <td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td>
+          </tr>
+          <tr class="synthese-section-header">
+            <td colspan="8">Réalisations en milieu professionnel — 2e année</td>
+          </tr>
+          <tr>
+            <td class="td-real">Création d'un cahier des charges pour un chantier</td>
+            <td class="td-periode">05/01/26 → 07/06/26</td>
+            <td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Déploiement de switch</td>
+            <td class="td-periode">05/01/26 → 07/06/26</td>
+            <td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Dépannage de switch</td>
+            <td class="td-periode">05/01/26 → 07/06/26</td>
+            <td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td><td></td><td></td><td></td>
+          </tr>
+          <tr>
+            <td class="td-real">Déploiement de Windows 11</td>
+            <td class="td-periode">05/01/26 → 07/06/26</td>
+            <td></td><td></td><td></td><td></td>
+            <td><span class="check-x">X</span></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -689,29 +954,6 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX; mouseY = e.clientY;
-    cursor.style.left = mouseX - 5 + 'px';
-    cursor.style.top = mouseY - 5 + 'px';
-  });
-
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.12;
-    ringY += (mouseY - ringY) * 0.12;
-    ring.style.left = ringX - 18 + 'px';
-    ring.style.top = ringY - 18 + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.transform = 'scale(2)'; ring.style.transform = 'scale(1.5)'; });
-    el.addEventListener('mouseleave', () => { cursor.style.transform = 'scale(1)'; ring.style.transform = 'scale(1)'; });
-  });
 
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
@@ -733,3 +975,14 @@
     if (entries[0].isIntersecting) {
       document.querySelectorAll('.stat-num').forEach(el => {
         const text = el.textContent;
+        const num = parseFloat(text);
+        const suffix = text.includes('%') ? '%' : (text.includes('+') ? '+' : '');
+        animateCount(el, num, suffix);
+      });
+    }
+  }, { threshold: 0.5 });
+  const statsBar = document.querySelector('.stats-bar');
+  if (statsBar) statsObserver.observe(statsBar);
+</script>
+</body>
+</html>
